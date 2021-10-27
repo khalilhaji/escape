@@ -1,5 +1,5 @@
-import { createSlice } from "@reduxjs/toolkit";
-import { codeStatuses } from "../const";
+import { createSlice, original } from "@reduxjs/toolkit";
+import { codeStatuses, codeStatusMap } from "../const";
 
 export const codeSlice = createSlice({
   name: "code",
@@ -10,6 +10,9 @@ export const codeSlice = createSlice({
 
   reducers: {
     codeChanged: (state, action) => {
+      if (state.status !== codeStatuses.TYPING) {
+        return;
+      }
       state.status = codeStatuses.TYPING;
       const code = action.payload;
       state.code = code;
@@ -19,12 +22,15 @@ export const codeSlice = createSlice({
         } else {
           state.status = codeStatuses.REJECTED;
         }
-        state.code = "";
       }
+    },
+    clear: (state) => {
+      state.code = "";
+      state.status = codeStatuses.TYPING;
     },
   },
 });
 
-export const { codeChanged } = codeSlice.actions;
+export const { codeChanged, clear } = codeSlice.actions;
 
 export default codeSlice.reducer;

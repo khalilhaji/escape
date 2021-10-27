@@ -3,7 +3,7 @@ import OtpInput from "react-otp-input";
 import PropTypes from "prop-types";
 import "./Escape.css";
 import PopUp from "./PopUp";
-import { codeStatuses } from "../const";
+import { codeStatuses, codeStatusMap } from "../const";
 import Expire from "react-expire";
 
 export default class Escape extends React.Component {
@@ -14,13 +14,15 @@ export default class Escape extends React.Component {
   };
 
   render() {
-    const { code, codeStatus, onCodeChange } = this.props;
+    const { code, codeStatus, onCodeChange, onPopupExpire } = this.props;
 
     const popup =
       codeStatus === codeStatuses.TYPING ? (
         <></>
       ) : (
-        <PopUp popUpState={codeStatus.popup} />
+        <Expire until={3000} onExpire={onPopupExpire}>
+          <PopUp popUpState={codeStatusMap[codeStatus]} />
+        </Expire>
       );
 
     return (
@@ -33,7 +35,7 @@ export default class Escape extends React.Component {
             separator={<span className="separator"></span>}
             inputStyle="passcode"
           />
-          <Expire>{popup}</Expire>
+          {popup}
         </div>
       </React.Fragment>
     );

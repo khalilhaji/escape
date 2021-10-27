@@ -1,7 +1,12 @@
 import { popUpStates } from "./components/PopUp";
 
 export const codeStatuses = {
-  TYPING: {},
-  ACCEPTED: { popup: popUpStates.GRANTED },
-  REJECTED: { popup: popUpStates.DENIED },
+  TYPING: "TYPING",
+  ACCEPTED: "ACCEPTED",
+  REJECTED: "REJECTED",
+};
+
+export const codeStatusMap = {
+  [codeStatuses.ACCEPTED]: popUpStates.GRANTED,
+  [codeStatuses.REJECTED]: popUpStates.DENIED,
 };
