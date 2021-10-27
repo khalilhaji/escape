@@ -12,3 +12,7 @@
   min-height: 100vh;
   justify-content: center;
 }
+
+body {
+  color: #fff4c2;
+}
