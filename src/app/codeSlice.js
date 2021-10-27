@@ -1,5 +1,5 @@
-import { createSlice, original } from "@reduxjs/toolkit";
-import { codeStatuses, codeStatusMap } from "../const";
+import { createSlice } from "@reduxjs/toolkit";
+import { codeStatuses } from "../const";
 
 export const codeSlice = createSlice({
   name: "code",
