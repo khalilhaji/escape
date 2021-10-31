@@ -1,43 +1,75 @@
 import React from "react";
-import OtpInput from "react-otp-input";
 import PropTypes from "prop-types";
 import "./Escape.css";
-import PopUp from "./PopUp";
-import { codeStatuses, codeStatusMap } from "../const";
-import Expire from "react-expire";
+import Code from "./Code";
+import { phase } from "../const";
+import Start from "./Start";
+import Countdown from "react-countdown";
+import Login from "./Login";
+import GameOver from "./GameOver";
+import DateEntry from "./DateEntry";
+import Travel from "./Travel";
+import Win from "./Win";
 
 export default class Escape extends React.Component {
   static propTypes = {
-    code: PropTypes.string,
-    codeStatus: PropTypes.oneOf(Object.keys(codeStatuses)),
+    codeProps: PropTypes.shape(Code.propTypes),
+    currentPhase: PropTypes.oneOf(Object.keys(phase)),
     onCodeChange: PropTypes.func,
+    onPopupExpire: PropTypes.func,
+    onPhaseChange: PropTypes.func,
+    onTimeup: PropTypes.func,
+    timeRemaining: PropTypes.number,
   };
 
   render() {
-    const { code, codeStatus, onCodeChange, onPopupExpire } = this.props;
+    const {
+      codeProps,
+      onCodeChange,
+      onPopupExpire,
+      onPhaseChange,
+      currentPhase,
+      onTimeup,
+      countdownDate,
+      timeRemaining,
+    } = this.props;
 
-    const popup =
-      codeStatus === codeStatuses.TYPING ? (
-        <></>
+    const screenMap = {
+      [phase.START]: <Start onPhaseChange={onPhaseChange} />,
+      [phase.LOGIN]: <Login onPhaseChange={onPhaseChange} />,
+      [phase.PLAYING]: (
+        <Code
+          {...codeProps}
+          onCodeChange={onCodeChange}
+          onPopupExpire={onPopupExpire}
+        />
+      ),
+      [phase.ENTER_DATE]: <DateEntry onPhaseChange={onPhaseChange} />,
+      [phase.TRAVEL]: <Travel onPhaseChange={onPhaseChange} />,
+      [phase.GAME_OVER]: <GameOver />,
+      [phase.WIN]: <Win timeRemaining={Math.floor(timeRemaining)} />,
+    };
+
+    const countdown =
+      currentPhase !== phase.START ? (
+        <div className="countdown">
+          <h1>
+            <Countdown
+              date={countdownDate}
+              zeroPadDays={0}
+              onComplete={onTimeup}
+            />
+          </h1>
+        </div>
       ) : (
-        <Expire until={3000} onExpire={onPopupExpire}>
-          <PopUp popUpState={codeStatusMap[codeStatus]} />
-        </Expire>
+        <></>
       );
 
     return (
-      <React.Fragment>
-        <div className="passcode-wrapper">
-          <OtpInput
-            value={code}
-            onChange={onCodeChange}
-            numInputs={4}
-            separator={<span className="separator"></span>}
-            inputStyle="passcode"
-          />
-          {popup}
-        </div>
-      </React.Fragment>
+      <div className="outer">
+        {countdown}
+        {screenMap[currentPhase]}
+      </div>
     );
   }
 }

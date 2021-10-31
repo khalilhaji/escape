@@ -1,7 +1,7 @@
 import { connect } from "react-redux";
 import Escape from "./components/Escape";
 import { stateToPropsSelector } from "./selectors";
-import { clear, codeChanged } from "./app/codeSlice";
+import { clear, codeChanged, phaseChange, timeup } from "./app/codeSlice";
 
 const mapStateToProps = (state) => stateToPropsSelector(state);
 
@@ -12,6 +12,13 @@ const mapDispatchToProps = (dispatch) => {
     },
     onPopupExpire: () => {
       dispatch(clear());
+    },
+    onPhaseChange: (phase) => {
+      dispatch(phaseChange(phase));
+    },
+    onTimeup: () => {
+      dispatch(clear);
+      dispatch(timeup());
     },
   };
 };

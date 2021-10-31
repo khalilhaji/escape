@@ -1,18 +1,13 @@
-.separator {
-  padding: 10px;
+body {
+  color: #fff4c2;
 }
 
-.passcode {
-  height: auto;
-  font-size: 125px;
-}
-
-.passcode-wrapper {
+.outer {
+  height: 100vh;
   display: flex;
-  min-height: 100vh;
   justify-content: center;
 }
 
-body {
-  color: #fff4c2;
+.countdown {
+  position: absolute;
 }

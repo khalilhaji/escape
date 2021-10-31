@@ -1,11 +1,16 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { codeStatuses } from "../const";
+import { codes, codeStatuses, gameLength, phase } from "../const";
+import _ from "lodash";
 
 export const codeSlice = createSlice({
   name: "code",
   initialState: {
-    code: "",
-    status: codeStatuses.TYPING,
+    input: "",
+    status: codeStatuses.ACCEPTED,
+    phase: phase.START,
+    codeMap: _.mapValues(codes, () => false),
+    remainingCodes: 3,
+    popupMessage: "",
   },
 
   reducers: {
@@ -13,24 +18,45 @@ export const codeSlice = createSlice({
       if (state.status !== codeStatuses.TYPING) {
         return;
       }
-      state.status = codeStatuses.TYPING;
       const code = action.payload;
-      state.code = code;
+      state.input = code;
       if (code.length === 4) {
-        if (code === "1234") {
+        if (state.codeMap[code] === false) {
           state.status = codeStatuses.ACCEPTED;
+          state.popupMessage = codes[code];
+          state.codeMap[code] = true;
+          if (state.remainingCodes === 1) {
+            state.phase = phase.ENTER_DATE;
+          } else {
+            state.remainingCodes--;
+          }
         } else {
           state.status = codeStatuses.REJECTED;
+          state.popupMessage = "Invalid Code";
         }
       }
     },
     clear: (state) => {
-      state.code = "";
+      state.input = "";
       state.status = codeStatuses.TYPING;
+      state.popupMessage = "";
+    },
+    phaseChange: (state, action) => {
+      if (action.payload === phase.LOGIN) {
+        state.countdown = Date.now() + 1000 * 60 * gameLength;
+      }
+
+      if (action.payload === phase.PLAYING) {
+        state.popupMessage = "Access Granted";
+      }
+      state.phase = action.payload;
+    },
+    timeup: (state) => {
+      state.phase = phase.GAME_OVER;
     },
   },
 });
 
-export const { codeChanged, clear } = codeSlice.actions;
+export const { codeChanged, clear, phaseChange, timeup } = codeSlice.actions;
 
 export default codeSlice.reducer;

@@ -1,0 +1,14 @@
+.separator {
+  padding: 10px;
+}
+
+.passcode {
+  height: auto;
+  font-size: 125px;
+}
+
+.passcode-wrapper {
+  display: flex;
+  min-height: 100vh;
+  justify-content: center;
+}

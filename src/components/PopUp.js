@@ -5,18 +5,16 @@ import "./popup.css";
 export const popUpStates = {
   GRANTED: {
     className: "accepted",
-    text: "Correct",
   },
   DENIED: {
     className: "rejected",
-    text: "Calibration Error",
   },
 };
 
-export const PopUp = ({ popUpState }) => {
+export const PopUp = ({ popUpState, msg }) => {
   return (
     <div className={`popup ${popUpState.className}`}>
-      <h2>{popUpState.text}</h2>
+      <h2>{msg}</h2>
     </div>
   );
 };
