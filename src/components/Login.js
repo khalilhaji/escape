@@ -1,5 +1,6 @@
 import React from "react";
 import { phase } from "../const";
+import { popUpStates } from "./PopUp";
 
 export default class Login extends React.Component {
   constructor(props) {
@@ -8,12 +9,13 @@ export default class Login extends React.Component {
   }
 
   render() {
-    const { onPhaseChange } = this.props;
+    const { onPhaseChange, triggerPopup, typing } = this.props;
 
     const handleSubmit = () => {
       if (this.state.input === "78245") {
         onPhaseChange(phase.PLAYING);
       } else {
+        triggerPopup("Incorrect password", popUpStates.DENIED);
         this.setState({ input: "" });
       }
     };
@@ -29,6 +31,7 @@ export default class Login extends React.Component {
               input: pass.target.value,
             });
           }}
+          disabled={!typing}
           onKeyPress={(e) => {
             if (e.key === "Enter") {
               handleSubmit();

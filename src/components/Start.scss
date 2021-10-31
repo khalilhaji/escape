@@ -8,11 +8,9 @@
   padding: 100px;
 }
 
-@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700;800;900&display=swap");
-
 :root {
   --color-red: #ec1840;
-  --color-purple: #7a18ec;
+  --color-green: #00be5f;
   --color-white: #fff;
   --color-black-1: #111;
   --color-black-2: #222;
@@ -42,15 +40,24 @@
   color: var(--color-white);
   transition: var(--speed-normal);
   border: 1px solid var(--color-red);
+  &.green {
+    border: 1px solid var(--color-green);
+  }
   cursor: pointer;
   &:hover {
     border: 1px solid transparent;
     background: var(--color-red) url(https://i.postimg.cc/wBXGXbWN/pixel.png); // 360px x 1080px
+    &.green:hover {
+      background: var(--color-green);
+      transition-delay: 0s;
+      animation: animate var(--speed-fast) forwards;
+    }
     transition-delay: 0.8s;
     background-size: 180px;
     animation: animate var(--speed-fast) steps(8) forwards;
   }
 }
+
 @keyframes animate {
   0% {
     background-position-y: 0;

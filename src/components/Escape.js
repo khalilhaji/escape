@@ -1,5 +1,4 @@
 import React from "react";
-import PropTypes from "prop-types";
 import "./Escape.css";
 import Code from "./Code";
 import { phase } from "../const";
@@ -10,21 +9,14 @@ import GameOver from "./GameOver";
 import DateEntry from "./DateEntry";
 import Travel from "./Travel";
 import Win from "./Win";
+import Expire from "react-expire";
+import PopUp from "./PopUp";
 
 export default class Escape extends React.Component {
-  static propTypes = {
-    codeProps: PropTypes.shape(Code.propTypes),
-    currentPhase: PropTypes.oneOf(Object.keys(phase)),
-    onCodeChange: PropTypes.func,
-    onPopupExpire: PropTypes.func,
-    onPhaseChange: PropTypes.func,
-    onTimeup: PropTypes.func,
-    timeRemaining: PropTypes.number,
-  };
-
   render() {
     const {
-      codeProps,
+      code,
+      typing,
       onCodeChange,
       onPopupExpire,
       onPhaseChange,
@@ -32,19 +24,26 @@ export default class Escape extends React.Component {
       onTimeup,
       countdownDate,
       timeRemaining,
+      popupMessage,
+      popupState,
+      triggerPopup,
     } = this.props;
 
     const screenMap = {
       [phase.START]: <Start onPhaseChange={onPhaseChange} />,
-      [phase.LOGIN]: <Login onPhaseChange={onPhaseChange} />,
-      [phase.PLAYING]: (
-        <Code
-          {...codeProps}
-          onCodeChange={onCodeChange}
-          onPopupExpire={onPopupExpire}
+      [phase.LOGIN]: (
+        <Login
+          onPhaseChange={onPhaseChange}
+          triggerPopup={triggerPopup}
+          typing={typing}
         />
       ),
-      [phase.ENTER_DATE]: <DateEntry onPhaseChange={onPhaseChange} />,
+      [phase.PLAYING]: (
+        <Code code={code} typing={typing} onCodeChange={onCodeChange} />
+      ),
+      [phase.ENTER_DATE]: (
+        <DateEntry onPhaseChange={onPhaseChange} triggerPopup={triggerPopup} />
+      ),
       [phase.TRAVEL]: <Travel onPhaseChange={onPhaseChange} />,
       [phase.GAME_OVER]: <GameOver />,
       [phase.WIN]: <Win timeRemaining={Math.floor(timeRemaining)} />,
@@ -65,8 +64,18 @@ export default class Escape extends React.Component {
         <></>
       );
 
+    const popup =
+      popupMessage === "" ? (
+        <></>
+      ) : (
+        <Expire until={1000} onExpire={onPopupExpire}>
+          <PopUp popUpState={popupState} msg={popupMessage} />
+        </Expire>
+      );
+
     return (
       <div className="outer">
+        {popup}
         {countdown}
         {screenMap[currentPhase]}
       </div>

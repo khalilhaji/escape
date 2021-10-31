@@ -22,9 +22,8 @@ export const phase = {
 };
 
 export const codes = {
-  1234: "Calibration",
-  4321: "other thing",
-  8765: "you did a thing",
+  6969: "Calibration",
+  2957: "other thing",
 };
 
 export const gameLength = 20;

@@ -2,8 +2,6 @@ import React from "react";
 import { phase } from "../const";
 
 export default class Travel extends React.Component {
-  static propTypes = {};
-
   render() {
     const { onPhaseChange } = this.props;
 
@@ -19,7 +17,7 @@ export default class Travel extends React.Component {
         </p>
 
         <button
-          className="fancy-button"
+          className="fancy-button green"
           onClick={() => {
             onPhaseChange(phase.WIN);
           }}

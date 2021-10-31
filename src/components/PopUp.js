@@ -1,5 +1,4 @@
 import React from "react";
-import PT from "prop-types";
 import "./popup.css";
 
 export const popUpStates = {
@@ -17,10 +16,6 @@ export const PopUp = ({ popUpState, msg }) => {
       <h2>{msg}</h2>
     </div>
   );
-};
-
-PopUp.propTypes = {
-  popUpState: PT.object.isRequired,
 };
 
 export default PopUp;

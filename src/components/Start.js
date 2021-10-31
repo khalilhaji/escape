@@ -1,13 +1,8 @@
 import React from "react";
-import PropTypes from "prop-types";
 import { phase } from "../const";
 import "./Start.scss";
 
 export default class Start extends React.Component {
-  static propTypes = {
-    onPhaseChange: PropTypes.func,
-  };
-
   render() {
     const { onPhaseChange } = this.props;
 
