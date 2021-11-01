@@ -56,10 +56,16 @@ export const codeSlice = createSlice({
         state.popupState = popUpStates.GRANTED;
         state.typing = false;
       }
+
+      if (action.payload === phase.WIN) {
+        state.endTime = state.countdown - Date.now();
+      }
       state.phase = action.payload;
     },
     timeup: (state) => {
-      state.phase = phase.GAME_OVER;
+      if (state.phase !== phase.WIN) {
+        state.phase = phase.GAME_OVER;
+      }
     },
     popup: (state, action) => {
       state.popupMessage = action.payload.message;

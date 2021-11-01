@@ -1,4 +1,4 @@
-import { createSelector, createStructuredSelector } from "reselect";
+import { createStructuredSelector } from "reselect";
 
 const codeSelector = (state) => state.code.input;
 
@@ -10,21 +10,14 @@ const currentPhaseSelector = (state) => state.code.phase;
 
 const countdownSelector = (state) => state.code.countdown;
 
-const countdownTimeSelector = (state) => state.code.countdown;
-
-const timeRemainingSelector = createSelector(
-  countdownTimeSelector,
-  (countdownTime) => {
-    return (countdownTime - Date.now()) / (1000 * 60);
-  }
-);
+const remainingTimeSelector = (state) => state.code.endTime / (1000 * 60);
 
 const popupStateSelector = (state) => state.code.popupState;
 
 export const stateToPropsSelector = createStructuredSelector({
   currentPhase: currentPhaseSelector,
   countdownDate: countdownSelector,
-  timeRemaining: timeRemainingSelector,
+  timeRemaining: remainingTimeSelector,
   popupMessage: messageSelector,
   popupState: popupStateSelector,
   code: codeSelector,

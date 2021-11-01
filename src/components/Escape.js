@@ -46,7 +46,7 @@ export default class Escape extends React.Component {
       ),
       [phase.TRAVEL]: <Travel onPhaseChange={onPhaseChange} />,
       [phase.GAME_OVER]: <GameOver />,
-      [phase.WIN]: <Win timeRemaining={Math.floor(timeRemaining)} />,
+      [phase.WIN]: <Win timeRemaining={timeRemaining} />,
     };
 
     const countdown =

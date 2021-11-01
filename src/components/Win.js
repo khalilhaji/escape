@@ -5,7 +5,7 @@ export default class Win extends React.Component {
     const { timeRemaining } = this.props;
     return (
       <div className="top">
-        <h1>You escaped with {timeRemaining} minutes remaining!</h1>
+        <h1>You escaped with {Math.floor(timeRemaining)} minutes remaining!</h1>
       </div>
     );
   }
