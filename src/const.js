@@ -26,4 +26,4 @@ export const codes = {
   2579: "Assembling framework...",
 };
 
-export const gameLength = 10;
+export const gameLength = 20;
