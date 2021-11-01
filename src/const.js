@@ -22,8 +22,8 @@ export const phase = {
 };
 
 export const codes = {
-  6969: "Calibrating...",
-  2579: "Calibrating...",
+  6969: "Initializing core functions...",
+  2579: "Assembling framework...",
 };
 
 export const gameLength = 10;
