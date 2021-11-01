@@ -22,7 +22,7 @@ export default class Login extends React.Component {
 
     return (
       <div className="top">
-        <h3>Enter Password:</h3>
+        <h4>Enter Password:</h4>
         <input
           type="password"
           value={this.state.input}

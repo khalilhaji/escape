@@ -8,6 +8,20 @@
   padding: 100px;
 }
 
+h3 {
+  position: fixed;
+  top: 10px;
+}
+
+.email {
+  padding: 5px;
+  border: 1px solid;
+  border-color: #000000;
+  border-radius: 5px;
+  opacity: 80%;
+  max-width: 50vw;
+}
+
 :root {
   --color-red: #ec1840;
   --color-green: #00be5f;

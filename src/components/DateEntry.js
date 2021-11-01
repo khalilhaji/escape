@@ -19,6 +19,7 @@ export default class DateEntry extends React.Component {
       console.log(expectedDate);
       console.log(this.state.date);
       if (this.state.date.getDate() === expectedDate.getDate()) {
+        triggerPopup("Encoding destination...", popUpStates.GRANTED);
         onPhaseChange(phase.TRAVEL);
       } else {
         triggerPopup("Incorrect date", popUpStates.DENIED);
@@ -30,7 +31,7 @@ export default class DateEntry extends React.Component {
 
     return (
       <div className="top">
-        <h1>select date</h1>
+        <h4>Enter Destination Date:</h4>
         <ReactDatePicker selected={this.state.date} onChange={onDateChange} />
         <button
           className="fancy-button"
